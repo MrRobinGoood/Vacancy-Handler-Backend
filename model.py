@@ -50,18 +50,24 @@ def plot_LSA(test_data, test_labels, savepath="PCA_demo.csv", plot=True):
         plt.legend(handles=[red_patch, green_patch, orange_patch], prop={'size': 30})
 
 
-def start_model(list_corpus, list_labels):
+def test_model(clf, X_test, count_vectorizer):
+    X_test_counts = count_vectorizer.transform(X_test)
+    y_predicted_counts = clf.predict(X_test_counts)
+    return y_predicted_counts
+
+
+def sep_train_test(list_corpus, list_labels):
     X_train, X_test, y_train, y_test = train_test_split(list_corpus, list_labels, test_size=0.2,
                                                         random_state=40)
-    X_train_counts, count_vectorizer = cv(X_train)
-    X_test_counts = count_vectorizer.transform(X_test)
+    return X_train, X_test, y_train, y_test
 
+
+def train_model(X_train, y_train):
+    X_train_counts, count_vectorizer = cv(X_train)
     clf = LogisticRegression(C=30.0, class_weight='balanced', solver='newton-cg',
                              multi_class='multinomial', n_jobs=-1, random_state=40)
     clf.fit(X_train_counts, y_train)
-    y_predicted_counts = clf.predict(X_test_counts)
-    accuracy, precision, recall, f1 = get_metrics(y_test, y_predicted_counts)
-    print("accuracy = %.3f, precision = %.3f, recall = %.3f, f1 = %.3f" % (accuracy, precision, recall, f1))
+    return clf, count_vectorizer
 
 # тест графиков
 # fig = plt.figure(figsize=(16, 16))
