@@ -1,4 +1,4 @@
-from text_handler import prepared_text
+from text_handler import *
 from model import *
 import gspread
 
@@ -9,19 +9,29 @@ if __name__ == '__main__':
     data_table = worksheet.get_all_values()
     data_table.pop(0)
 
-    list_corpus = []
-    list_labels = []
+    list_corpus_train, list_labels_train, list_source_sentence_train = prepared_table(data_table)
 
-    for i in range(995):
-        prepared_sentences = prepared_text(data_table[i][1])
-        for sentence in prepared_sentences:
-            if sentence:
-                sentence = ' '.join(sentence)
-                list_corpus.append(sentence)
-                list_labels.append(data_table[i][2])
-
-    X_train, X_test, y_train, y_test = sep_train_test(list_corpus, list_labels)
-    clf, count_vectorizer = train_model(X_train, y_train)
-    y_predicted_counts = test_model(clf, X_test, count_vectorizer)
-    accuracy, precision, recall, f1 = get_metrics(y_test, y_predicted_counts)
-    print("accuracy = %.3f, precision = %.3f, recall = %.3f, f1 = %.3f" % (accuracy, precision, recall, f1))
+    clf, count_vectorizer = train_model(list_corpus_train, list_labels_train)
+    i = 0
+    test_list = [
+        'Выполнение работ по гнутью и резке арматурной стали на ручных, электромеханических и электрических станках. Выполнение работ по сборке и вязке арматурных сеток и плоских арматурных каркасов.',
+        'Вахта в город Москва.  Обязанности: - армирование каркаса;  Требования: - опыт в строительстве приветствуется; - работа в бригаде;  Условия: - продолжительность вахты 60/30 (продление вахты возможно); - Официальное трудоустройство; - ЗП в срок и без задержек; - Авансирование дважды в месяц по 15 000 рублей, 15 и 30 числа; - Питание трехразовое за счет организации; - Выдача спецодежды и Сизов без вычета из заработной платы; - Организованные отправки до объекта (покупка билетов); - Помощь в прохождение медицинского осмотра; - Возможность получить квалификационные удостоверения; - Карьерный рост до бригадира/мастера;',
+        'Крупной Федеральной Компании для работы ВАХТОВЫМ МЕТОДОМ на строительные участки требуются специалисты:  Обязанности:  · Работы на монолите (заливка бетона, укладка и вязка арматуры)  · Монтажные работы (МК/ЖБК)  · Общестроительные работы и вспомогательные работы  Требования:  · Понимание работы в бригаде  · Дисциплинированность, трудолюбие  · Опыт работы в строительстве будет преимуществом  · (готовы рассмотреть кандидатов и без опыта работы, всему научим, в перспективе карьерный рост до бригадира/мастера участка)  Условия:  · Продолжительность вахты 60/30, 90/30 (можно больше)  · Официальное трудоустройство по ТК РФ с первой рабочей смены  · ЗП строго в срок и без задержек (документальное подтверждение в трудовом договоре)  · Авансирование (15 и 30го числа каждого месяца по 15000 р.)  · Обеспечим сезонной спецодеждой и СИЗами без вычетов из ЗП  · Организованное трехраховое горячее питание за счет компании  · Организованные отправки до объектов (покупаем билеты на вахту/с вахты)  · Помощь в прохождении мед. осмотра (при необходимости)  · Возможность получить квалификационное удостоверение (обучение основным и смежным специальностям в нашем аккредитованном учебном центре)',
+        ]
+    list_corpus_test, list_source_sentence_test = prepared_list(test_list)
+    y_predicted_counts = test_model(clf, list_corpus_test, count_vectorizer)
+    print(y_predicted_counts)
+    print(list_source_sentence_test)
+    for one_vacancy in list_source_sentence_test:
+        class_suggestions = {'Должностные обязанности': [], 'Условия': [], 'Требования к соискателю': []}
+        for sentence in one_vacancy:
+            if y_predicted_counts[i] == '0':
+                class_suggestions['Должностные обязанности'].append(sentence)
+            elif y_predicted_counts[i] == '1':
+                class_suggestions['Условия'].append(sentence)
+            else:
+                class_suggestions['Требования к соискателю'].append(sentence)
+            i += 1
+        print('Должностные обязанности: ', ' '.join(class_suggestions['Должностные обязанности']))
+        print('Условия: ', ' '.join(class_suggestions['Условия']))
+        print('Требования к соискателю: ', ' '.join(class_suggestions['Требования к соискателю']))
