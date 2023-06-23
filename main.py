@@ -1,17 +1,16 @@
+import pickle
+
 from text_handler import *
 from model import *
-import gspread
 
 if __name__ == '__main__':
-    gc = gspread.service_account(filename='key.json')
-    sh = gc.open("cpHh")
-    worksheet = sh.get_worksheet(0)
-    data_table = worksheet.get_all_values()
-    data_table.pop(0)
-
-    list_corpus_train, list_labels_train, list_source_sentence_train = prepared_table(data_table)
-
-    clf, count_vectorizer = train_model(list_corpus_train, list_labels_train)
+    f = open('model.pkl', 'rb')
+    clf = pickle.load(f)
+    f.close()
+    f = open('list_corpus_train.txt', 'r', encoding='utf-8')
+    list_corpus_train = f.read().split('.')
+    f.close()
+    X_train_counts, count_vectorizer = cv(list_corpus_train)
     i = 0
     test_list = [
         'Выполнение работ по гнутью и резке арматурной стали на ручных, электромеханических и электрических станках. Выполнение работ по сборке и вязке арматурных сеток и плоских арматурных каркасов.',

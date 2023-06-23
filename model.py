@@ -1,3 +1,5 @@
+import pickle
+
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, classification_report
@@ -22,6 +24,17 @@ def get_metrics(y_test, y_predicted):
     # true positives + true negatives/ total
     accuracy = accuracy_score(y_test, y_predicted)
     return accuracy, precision, recall, f1
+
+
+def save_model(clf):
+    with open('model.pkl', 'wb') as f:
+        pickle.dump(clf, f)
+
+
+def get_model():
+    with open('model.pkl', 'rb') as f:
+        clf = pickle.load(f)
+        return clf
 
 
 def cv(data):
@@ -62,12 +75,11 @@ def sep_train_test(list_corpus, list_labels):
     return X_train, X_test, y_train, y_test
 
 
-def train_model(X_train, y_train):
-    X_train_counts, count_vectorizer = cv(X_train)
+def train_model(X_train_counts, y_train):
     clf = LogisticRegression(C=30.0, class_weight='balanced', solver='newton-cg',
                              multi_class='multinomial', n_jobs=-1, random_state=40)
     clf.fit(X_train_counts, y_train)
-    return clf, count_vectorizer
+    return clf
 
 # тест графиков
 # fig = plt.figure(figsize=(16, 16))
