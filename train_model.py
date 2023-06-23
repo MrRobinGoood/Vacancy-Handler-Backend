@@ -1,5 +1,3 @@
-import pickle
-
 import gspread
 from model import train_model, cv,save_model
 from text_handler import prepared_table

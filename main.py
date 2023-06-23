@@ -1,12 +1,8 @@
-import pickle
-
 from text_handler import *
 from model import *
 
 if __name__ == '__main__':
-    f = open('model.pkl', 'rb')
-    clf = pickle.load(f)
-    f.close()
+    clf = get_model()
     f = open('list_corpus_train.txt', 'r', encoding='utf-8')
     list_corpus_train = f.read().split('.')
     f.close()
