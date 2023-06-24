@@ -4,10 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, classification_report
 from sklearn.linear_model import LogisticRegression
-from sklearn.decomposition import PCA, TruncatedSVD
-import matplotlib
-import matplotlib.patches as mpatches
-import matplotlib.pyplot as plt
 
 
 def get_metrics(y_test, y_predicted):
@@ -45,22 +41,7 @@ def cv(data):
     return emb, count_vectorizer
 
 
-def plot_LSA(test_data, test_labels, savepath="PCA_demo.csv", plot=True):
-    lsa = TruncatedSVD(n_components=3)
-    lsa.fit(test_data)
-    lsa_scores = lsa.transform(test_data)
-    print(lsa_scores)
-    color_mapper = {label: idx for idx, label in enumerate(set(test_labels))}
-    color_column = [color_mapper[label] for label in test_labels]
-    colors = ['orange', 'blue']
-    if plot:
-        plt.scatter(lsa_scores[:, 0], lsa_scores[:, 1], s=8, alpha=.8, c=test_labels,
-                    cmap=matplotlib.colors.ListedColormap(colors))
 
-        red_patch = mpatches.Patch(color='orange', label='Должностные обязанности')
-        green_patch = mpatches.Patch(color='blue', label='Условия')
-        orange_patch = mpatches.Patch(color='green', label='Требования к соискателю')
-        plt.legend(handles=[red_patch, green_patch, orange_patch], prop={'size': 30})
 
 
 def test_model(clf, X_test, count_vectorizer):

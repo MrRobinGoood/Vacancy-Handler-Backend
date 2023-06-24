@@ -1,3 +1,6 @@
+from matplotlib import pyplot as plt
+
+from statistics import plot_LSA
 from text_handler import *
 from model import *
 
@@ -6,6 +9,10 @@ if __name__ == '__main__':
     f = open('list_corpus_train.txt', 'r', encoding='utf-8')
     list_corpus_train = f.read().split('.')
     f.close()
+    f = open('list_labels_train.txt', 'r', encoding='utf-8')
+    list_labels_train = f.read().split('.')
+    f.close()
+    list_labels_train = [int(i) for i in list_labels_train]
     X_train_counts, count_vectorizer = cv(list_corpus_train)
     i = 0
     test_list = [
@@ -30,3 +37,4 @@ if __name__ == '__main__':
         print('Должностные обязанности: ', ' '.join(class_suggestions['Должностные обязанности']))
         print('Условия: ', ' '.join(class_suggestions['Условия']))
         print('Требования к соискателю: ', ' '.join(class_suggestions['Требования к соискателю']))
+    plot_LSA(X_train_counts, list_labels_train)
