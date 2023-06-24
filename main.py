@@ -16,6 +16,7 @@ if __name__ == '__main__':
     list_labels_train = [int(i) for i in list_labels_train]
     X_train_counts, count_vectorizer = cv(list_corpus_train)
     i = 0
+
     test_list = [
         'Выполнение работ по гнутью и резке арматурной стали на ручных, электромеханических и электрических станках. Выполнение работ по сборке и вязке арматурных сеток и плоских арматурных каркасов.',
         'Вахта в город Москва.  Обязанности: - армирование каркаса;  Требования: - опыт в строительстве приветствуется; - работа в бригаде;  Условия: - продолжительность вахты 60/30 (продление вахты возможно); - Официальное трудоустройство; - ЗП в срок и без задержек; - Авансирование дважды в месяц по 15 000 рублей, 15 и 30 числа; - Питание трехразовое за счет организации; - Выдача спецодежды и Сизов без вычета из заработной платы; - Организованные отправки до объекта (покупка билетов); - Помощь в прохождение медицинского осмотра; - Возможность получить квалификационные удостоверения; - Карьерный рост до бригадира/мастера;',
@@ -25,21 +26,16 @@ if __name__ == '__main__':
     y_predicted_counts = test_model(clf, list_corpus_test, count_vectorizer)
     print(y_predicted_counts)
     print(list_source_sentence_test)
+    print(len(list_source_sentence_test))
     df = pd.DataFrame()
-    for one_vacancy in list_source_sentence_test:
-        class_suggestions = {'Должностные обязанности': [], 'Условия': [], 'Требования к соискателю': []}
-        for sentence in one_vacancy:
+    for ind_one_vacancy in range(len(list_source_sentence_test)):
+        class_suggestions = {'Исходник': [test_list[ind_one_vacancy]], 'Должностные обязанности': [], 'Условия': [], 'Требования к соискателю': []}
+        for sentence in list_source_sentence_test[ind_one_vacancy]:
             if y_predicted_counts[i] == '0':
                 class_suggestions['Должностные обязанности'].append(sentence)
-                # class_suggestions['Условия'].append('')
-                # class_suggestions['Требования к соискателю'].append('')
             elif y_predicted_counts[i] == '1':
-                # class_suggestions['Должностные обязанности'].append('')
-                # class_suggestions['Требования к соискателю'].append('')
                 class_suggestions['Условия'].append(sentence)
             else:
-                # class_suggestions['Должностные обязанности'].append('')
-                # class_suggestions['Условия'].append('')
                 class_suggestions['Требования к соискателю'].append(sentence)
             i += 1
         class_suggestions['Должностные обязанности'] = [' '.join(class_suggestions['Должностные обязанности'])]
