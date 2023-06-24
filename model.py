@@ -41,9 +41,6 @@ def cv(data):
     return emb, count_vectorizer
 
 
-
-
-
 def test_model(clf, X_test, count_vectorizer):
     X_test_counts = count_vectorizer.transform(X_test)
     y_predicted_counts = clf.predict(X_test_counts)
@@ -61,6 +58,8 @@ def train_model(X_train_counts, y_train):
                              multi_class='multinomial', n_jobs=-1, random_state=40)
     clf.fit(X_train_counts, y_train)
     return clf
+
+
 
 # тест графиков
 # fig = plt.figure(figsize=(16, 16))
