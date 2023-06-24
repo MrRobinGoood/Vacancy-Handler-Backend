@@ -1,9 +1,4 @@
-import pandas as pd
-from matplotlib import pyplot as plt
-
-from statistics import plot_LSA
 from text_handler import *
-from model import *
 
 if __name__ == '__main__':
     # f = open('list_corpus_train.txt', 'r', encoding='utf-8')

@@ -23,12 +23,12 @@ def get_metrics(y_test, y_predicted):
 
 
 def save_model(clf):
-    with open('model.pkl', 'wb') as f:
+    with open('./backend/resources/model.pkl', 'wb') as f:
         pickle.dump(clf, f)
 
 
 def get_model():
-    with open('model.pkl', 'rb') as f:
+    with open('./backend/resources/model.pkl', 'rb') as f:
         clf = pickle.load(f)
         return clf
 

@@ -1,10 +1,9 @@
-from typing import Union, Annotated
-from fastapi import FastAPI
-from fastapi import FastAPI, Body, status, UploadFile, File
-from fastapi.responses import JSONResponse, FileResponse
-from text_handler import get_result_dict, write_to_excel
+from fastapi import FastAPI, Body, UploadFile, File
+from fastapi.responses import FileResponse
+from backend.core.text_handler import get_result_dict, write_to_excel
 import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
 
 
@@ -25,6 +24,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.post("/upload")
 def upload_file(file: UploadFile = File(...)):
     print('started upload')
@@ -36,9 +36,10 @@ def upload_file(file: UploadFile = File(...)):
     # file_path = 'resources/result.xlsx'
     # return FileResponse(path=file_path, filename=file_path)
 
+
 @app.get("/download")
 def download_file():
-    file_path = 'resources/result.xlsx'
+    file_path = './backend/database/result.xlsx'
     return FileResponse(path=file_path, filename=file_path)
 
 
