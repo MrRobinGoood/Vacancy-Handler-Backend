@@ -1,5 +1,6 @@
 import re
 
+import emoji as emoji
 import pandas as pd
 from pymorphy2 import MorphAnalyzer
 import nltk
@@ -14,7 +15,7 @@ morph = MorphAnalyzer()
 
 
 def split_to_sentences(text):
-    text = re.split('[.;\n!?·-]+', text)
+    text = re.split('[.;\n!?·•⦁-]+', text)
     return text
 
 
@@ -42,6 +43,7 @@ def prepared_table(data_table):
     list_labels = []
     list_source_sentence = []
     for i in range(len(data_table)):
+        data_table[i][1]  = ''.join(char for char in data_table[i][1] if not emoji.is_emoji(char) and char != '▉')
         source_sentence = split_to_sentences(data_table[i][1])
         prepared_sentences = prepared_text(source_sentence)
         temp = []
@@ -59,6 +61,7 @@ def prepared_list(lst):
     list_corpus = []
     list_source_sentence = []
     for i in range(len(lst)):
+        lst[i] = ''.join(char for char in lst[i] if not emoji.is_emoji(char) and char != '▉')
         source_sentence = split_to_sentences(lst[i])
         prepared_sentences = prepared_text(source_sentence)
         temp = []
