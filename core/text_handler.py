@@ -3,6 +3,7 @@ import re
 import pandas as pd
 from pymorphy2 import MorphAnalyzer
 import nltk
+
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 

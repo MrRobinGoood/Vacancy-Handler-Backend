@@ -11,4 +11,4 @@ COPY app.py /backend/app.py
 
 RUN pip install --no-cache-dir --upgrade -r /backend/requirements.txt
 
-CMD ["uvicorn", "app:app", "--host", "127.0.0.1", "--port", "8000"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
