@@ -99,6 +99,6 @@ def get_result_dict(test_list):
 
 def write_to_excel(class_suggestions):
     df = pd.DataFrame(class_suggestions)
-    writer = pd.ExcelWriter('result.xlsx', engine='xlsxwriter')
+    writer = pd.ExcelWriter('resources/result.xlsx', engine='xlsxwriter')
     df.to_excel(writer, index=False)
     writer._save()
