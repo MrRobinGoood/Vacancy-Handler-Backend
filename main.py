@@ -1,3 +1,4 @@
+import pandas as pd
 from matplotlib import pyplot as plt
 
 from statistics import plot_LSA
@@ -24,17 +25,32 @@ if __name__ == '__main__':
     y_predicted_counts = test_model(clf, list_corpus_test, count_vectorizer)
     print(y_predicted_counts)
     print(list_source_sentence_test)
+    df = pd.DataFrame()
     for one_vacancy in list_source_sentence_test:
         class_suggestions = {'Должностные обязанности': [], 'Условия': [], 'Требования к соискателю': []}
         for sentence in one_vacancy:
             if y_predicted_counts[i] == '0':
                 class_suggestions['Должностные обязанности'].append(sentence)
+                # class_suggestions['Условия'].append('')
+                # class_suggestions['Требования к соискателю'].append('')
             elif y_predicted_counts[i] == '1':
+                # class_suggestions['Должностные обязанности'].append('')
+                # class_suggestions['Требования к соискателю'].append('')
                 class_suggestions['Условия'].append(sentence)
             else:
+                # class_suggestions['Должностные обязанности'].append('')
+                # class_suggestions['Условия'].append('')
                 class_suggestions['Требования к соискателю'].append(sentence)
             i += 1
-        print('Должностные обязанности: ', ' '.join(class_suggestions['Должностные обязанности']))
-        print('Условия: ', ' '.join(class_suggestions['Условия']))
-        print('Требования к соискателю: ', ' '.join(class_suggestions['Требования к соискателю']))
+        class_suggestions['Должностные обязанности'] = [' '.join(class_suggestions['Должностные обязанности'])]
+        class_suggestions['Условия'] = [' '.join(class_suggestions['Условия'])]
+        class_suggestions['Требования к соискателю'] = [' '.join(class_suggestions['Требования к соискателю'])]
+        print('Должностные обязанности: ', class_suggestions['Должностные обязанности'])
+        print('Условия: ', class_suggestions['Условия'])
+        print('Требования к соискателю: ', class_suggestions['Требования к соискателю'])
+        df_temp = pd.DataFrame(class_suggestions)
+        df = pd.concat([df, df_temp])
+    writer = pd.ExcelWriter('dataframes.xlsx', engine='xlsxwriter')
+    df.to_excel(writer)
+    writer._save()
     plot_LSA(X_train_counts, list_labels_train)

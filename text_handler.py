@@ -62,4 +62,3 @@ def prepared_list(lst):
                 list_corpus.append(sentence)
         list_source_sentence.append(temp)
     return list_corpus, list_source_sentence
-
