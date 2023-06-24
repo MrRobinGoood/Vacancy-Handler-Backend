@@ -2,9 +2,11 @@ import re
 
 import pandas as pd
 from pymorphy2 import MorphAnalyzer
+import nltk
+nltk.download('stopwords')
 from nltk.corpus import stopwords
 
-from backend.core.model import get_model, test_model, cv
+from core.model import get_model, test_model, cv
 
 stopwords_ru = stopwords.words("russian")
 morph = MorphAnalyzer()
@@ -70,7 +72,7 @@ def prepared_list(lst):
 
 def get_result_dict(test_list):
     clf = get_model()
-    f = open('./backend/resources/list_corpus_train.txt', 'r', encoding='utf-8')
+    f = open('./resources/list_corpus_train.txt', 'r', encoding='utf-8')
     list_corpus_train = f.read().split('.')
     f.close()
     X_train_counts, count_vectorizer = cv(list_corpus_train)
@@ -99,6 +101,6 @@ def get_result_dict(test_list):
 
 def write_to_excel(class_suggestions):
     df = pd.DataFrame(class_suggestions)
-    writer = pd.ExcelWriter('./backend/database/result.xlsx', engine='xlsxwriter')
+    writer = pd.ExcelWriter('./database/result.xlsx', engine='xlsxwriter')
     df.to_excel(writer, index=False)
     writer._save()

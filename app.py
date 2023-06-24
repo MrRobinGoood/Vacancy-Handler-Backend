@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Body, UploadFile, File
 from fastapi.responses import FileResponse
-from backend.core.text_handler import get_result_dict, write_to_excel
+from core.text_handler import get_result_dict, write_to_excel
 import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -39,7 +39,7 @@ def upload_file(file: UploadFile = File(...)):
 
 @app.get("/download")
 def download_file():
-    file_path = './backend/database/result.xlsx'
+    file_path = './database/result.xlsx'
     return FileResponse(path=file_path, filename=file_path)
 
 
