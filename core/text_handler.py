@@ -43,7 +43,7 @@ def prepared_table(data_table):
     list_labels = []
     list_source_sentence = []
     for i in range(len(data_table)):
-        data_table[i][1]  = ''.join(char for char in data_table[i][1] if not emoji.is_emoji(char) and char != '▉')
+        data_table[i][1]  = ''.join(char for char in data_table[i][1] if not emoji.is_emoji(char) and char not in ['▉','_','*'])
         source_sentence = split_to_sentences(data_table[i][1])
         prepared_sentences = prepared_text(source_sentence)
         temp = []
@@ -61,7 +61,7 @@ def prepared_list(lst):
     list_corpus = []
     list_source_sentence = []
     for i in range(len(lst)):
-        lst[i] = ''.join(char for char in lst[i] if not emoji.is_emoji(char) and char != '▉')
+        lst[i] = ''.join(char for char in lst[i] if not emoji.is_emoji(char) and char not in ['▉','_','*'])
         source_sentence = split_to_sentences(lst[i])
         prepared_sentences = prepared_text(source_sentence)
         temp = []
@@ -76,7 +76,7 @@ def prepared_list(lst):
 
 def get_result_dict(test_list):
     clf = get_model()
-    f = open('./resources/list_corpus_train.txt', 'r', encoding='utf-8')
+    f = open('../resources/list_corpus_train.txt', 'r', encoding='utf-8')
     list_corpus_train = f.read().split('.')
     f.close()
     X_train_counts, count_vectorizer = cv(list_corpus_train)
@@ -103,8 +103,8 @@ def get_result_dict(test_list):
     return class_suggestions
 
 
-def write_to_excel(class_suggestions):
+def write_to_excel(class_suggestions, path):
     df = pd.DataFrame(class_suggestions)
-    writer = pd.ExcelWriter('./database/result.xlsx', engine='xlsxwriter')
+    writer = pd.ExcelWriter(path, engine='xlsxwriter')
     df.to_excel(writer, index=False)
     writer._save()

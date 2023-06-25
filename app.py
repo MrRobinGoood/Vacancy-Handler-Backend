@@ -32,7 +32,7 @@ def upload_file(file: UploadFile = File(...)):
     file.file.close()
     rd = get_result_dict(df['responsibilities(Должностные обязанности)'].tolist())
     print(rd)
-    write_to_excel(rd)
+    write_to_excel(rd,'./database/result.xlsx')
     # file_path = 'resources/result.xlsx'
     # return FileResponse(path=file_path, filename=file_path)
 
