@@ -43,7 +43,8 @@ def prepared_table(data_table):
     list_labels = []
     list_source_sentence = []
     for i in range(len(data_table)):
-        data_table[i][1]  = ''.join(char for char in data_table[i][1] if not emoji.is_emoji(char) and char not in ['▉','_','*'])
+        data_table[i][1] = ''.join(
+            char for char in data_table[i][1] if not emoji.is_emoji(char) and char not in ['▉', '_', '*', '='])
         source_sentence = split_to_sentences(data_table[i][1])
         prepared_sentences = prepared_text(source_sentence)
         temp = []
@@ -61,8 +62,8 @@ def prepared_list(lst):
     list_corpus = []
     list_source_sentence = []
     for i in range(len(lst)):
-        lst[i] = ''.join(char for char in lst[i] if not emoji.is_emoji(char) and char not in ['▉','_','*'])
-        source_sentence = split_to_sentences(lst[i])
+        tmp = ''.join(char for char in lst[i] if not emoji.is_emoji(char) and char not in ['▉', '_', '*', '='])
+        source_sentence = split_to_sentences(tmp)
         prepared_sentences = prepared_text(source_sentence)
         temp = []
         for j in range(len(prepared_sentences)):
@@ -97,9 +98,13 @@ def get_result_dict(test_list):
             else:
                 temp['Требования к соискателю'].append(sentence)
             i += 1
-        class_suggestions['Должностные обязанности'].append(' '.join(temp['Должностные обязанности']))
-        class_suggestions['Условия'].append(' '.join(temp['Условия']))
-        class_suggestions['Требования к соискателю'].append(' '.join(temp['Требования к соискателю']))
+        match = re.compile('x\d+D|услови[ея] ?:|требовани[ея] ?:|обязанност[ьи] ?:', re.IGNORECASE)
+        temp['Должностные обязанности'] = match.sub('', ' '.join(temp['Должностные обязанности']))
+        temp['Условия'] = match.sub('', ' '.join(temp['Условия']))
+        temp['Требования к соискателю'] = match.sub('', ' '.join(temp['Требования к соискателю']))
+        class_suggestions['Должностные обязанности'].append(temp['Должностные обязанности'])
+        class_suggestions['Условия'].append(temp['Условия'])
+        class_suggestions['Требования к соискателю'].append(temp['Требования к соискателю'])
     return class_suggestions
 
 
