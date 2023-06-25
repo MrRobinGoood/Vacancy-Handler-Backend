@@ -1,8 +1,13 @@
 version: '3'
 
 services:
-  app:
+  back-app:
     image: 'robingoood/backend-vhr:1.0'
     container_name: 'backend-vhr'
     ports:
       - '8000:8000'
+  front-app:
+    image: 'robingoood/frontend-vhr:1.0'
+    container_name: 'frontend-vhr'
+    ports:
+      - '3000:3000'
