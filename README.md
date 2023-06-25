@@ -1,2 +1,11 @@
-# Vacancy-Handler-Roskapstroy
-Vacancy handler for Roskapstroy case. For Digital-Breakout hack 2023.
+# Обработчик-вакансий-Роскапстрой
+Веб-приложение для классификации текста вакансий
+Склонировать репозиторий
+Создать виртуальное окружение venv
+Для запуска дальнейших скриптов перейти в директорию Vacancy-Handler-Roskapstroy(папка проекта)
+Запустить команду pip install -r requirements.txt для загрузки всех зависимостей-библиотек
+Командой  uvicorn app:app --reload запустить backend
+Для запуска Swagger документации можно воспользоваться ссылкой http://localhost:8000/docs
+
+
+
