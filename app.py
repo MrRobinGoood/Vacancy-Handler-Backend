@@ -6,14 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-
-class Resp:
-    def __init__(self, name):
-        self.name = name
-
-
-app = FastAPI()
-
 origins = ["*"]
 
 app.add_middleware(
@@ -27,14 +19,12 @@ app.add_middleware(
 
 @app.post("/upload")
 def upload_file(file: UploadFile = File(...)):
-    print('started upload')
+    print('-Started Upload File-')
     df = pd.read_excel(file.file.read())
     file.file.close()
     rd = get_result_dict(df['responsibilities(Должностные обязанности)'].tolist())
-    print(rd)
-    write_to_excel(rd,'./database/result.xlsx')
-    # file_path = 'resources/result.xlsx'
-    # return FileResponse(path=file_path, filename=file_path)
+    write_to_excel(rd, './database/result.xlsx')
+
 
 
 @app.get("/download")
@@ -45,7 +35,6 @@ def download_file():
 
 @app.post("/text")
 def get_input_text(data=Body()):
-    print('start')
+    print('-Started Upload Text-')
     class_suggestions = get_result_dict([data['text']])
-    print(class_suggestions)
     return class_suggestions

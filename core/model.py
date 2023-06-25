@@ -23,12 +23,12 @@ def get_metrics(y_test, y_predicted):
 
 
 def save_model(clf):
-    with open('../resources/model.pkl', 'wb') as f:
+    with open('./resources/model.pkl', 'wb') as f:
         pickle.dump(clf, f)
 
 
 def get_model():
-    with open('../resources/model.pkl', 'rb') as f:
+    with open('./resources/model.pkl', 'rb') as f:
         clf = pickle.load(f)
         return clf
 
@@ -60,8 +60,3 @@ def train_model(X_train_counts, y_train):
     return clf
 
 
-
-# тест графиков
-# fig = plt.figure(figsize=(16, 16))
-# plot_LSA(X_train_counts, y_train)
-# plt.show()

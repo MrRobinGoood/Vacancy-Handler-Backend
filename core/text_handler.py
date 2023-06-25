@@ -4,7 +4,7 @@ import emoji as emoji
 import pandas as pd
 from pymorphy2 import MorphAnalyzer
 import nltk
-#
+
 # nltk.download('stopwords')
 from nltk.corpus import stopwords
 
@@ -77,7 +77,7 @@ def prepared_list(lst):
 
 def get_result_dict(test_list):
     clf = get_model()
-    f = open('../resources/list_corpus_train.txt', 'r', encoding='utf-8')
+    f = open('./resources/list_corpus_train.txt', 'r', encoding='utf-8')
     list_corpus_train = f.read().split('.')
     f.close()
     X_train_counts, count_vectorizer = cv(list_corpus_train)
