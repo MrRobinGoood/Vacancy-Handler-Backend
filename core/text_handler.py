@@ -5,7 +5,7 @@ import pandas as pd
 from pymorphy2 import MorphAnalyzer
 import nltk
 
-# nltk.download('stopwords')
+nltk.download('stopwords')
 from nltk.corpus import stopwords
 
 from core.model import get_model, test_model, cv
