@@ -18,18 +18,22 @@
 ## Описание проекта
 Данный проект представляет собой веб-приложение обрабатывающее поля текстов вакансий. Наше решение анализирует текст плохо составленных вакансий и разделяет его на различные категории.
 
+ - Интерфейс приложения: 
+
+![интерфейс](https://github.com/MrRobinGoood/Vacancy-Handler-Backend/blob/master/resources/app_screen.png)
+
  - На данный момент доступны три класса: responsibilities(Должностные обязанности), requirements(Требования к соискателю), terms(Условия)
 
- - Нами был проведен анализ специфических данных полей вакансий и построена соответствующая [диаграмма](https://github.com/MrRobinGoood/Vacancy-Handler-Backend/blob/master/resources/diagram.png) карреляции трёх выбираемых классов
+ - Нами был проведен анализ специфических данных полей вакансий и построена соответствующая диаграмма карреляции трёх выбираемых классов ![диаграмма](https://github.com/MrRobinGoood/Vacancy-Handler-Backend/blob/master/resources/diagram.png) 
 
- - Также был проведен семантический и синтаксический анализ полученного датасета - [график](https://github.com/MrRobinGoood/Vacancy-Handler-Backend/blob/master/resources/graphic.png)
+ - Также был проведен семантический и синтаксический анализ полученного датасета ![график](https://github.com/MrRobinGoood/Vacancy-Handler-Backend/blob/master/resources/graphic.png)
 
  - Наша модель обучена на датасете, собранном и обработанном нами вручную, с использованием объединенных hh-вакансий с сайта [Роскапстрой](https://roskapstroy.ru/). 
  - За время хакатона нами было собрано и обработано более двух тысяч записей различных классов, доступных к просмотру в файле [hh_dataset](https://github.com/MrRobinGoood/Vacancy-Handler-Backend/blob/master/resources/datasets/hh_dataset.xlsx).
  - Нами также был обработан исходный датасет, в котором также вручную были исправлены многие недочеты(около 80% всех строк) - [файл main_dataset](https://github.com/MrRobinGoood/Vacancy-Handler-Backend/blob/master/resources/datasets/main_dataset.xlsx)
 
 ## Инструкция для запуска
-Для нашего решения доступна демо-версия по данному [адресу](...)
+Для нашего решения доступна демо-версия по данному адресу(устарело - вне работы)
 ### Для локального запуска на машине
 Пошаговая инструкция:
 1. Вам необходимо склонировать репозиторий
